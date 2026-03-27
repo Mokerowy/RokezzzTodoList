@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista zadań (TODO)</title>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+  </head>
+  <body>
+
+    <main class="todo-card">
+      <h1>Moje Zadania</h1>
+
+      <form class="input-group" id="todoForm">
+        <input
+          type="text"
+          id="todoInput"
+          placeholder="Co jest do zrobienia?"
+          required
+          aria-label="Nowe zadanie"
+        />
+        <button type="submit" class="btn btn-add">Dodaj</button>
+      </form>
+
+      <nav class="filters" id="filterGroup">
+        <button class="filter-btn active" data-filter="all">Wszystkie</button>
+        <button class="filter-btn" data-filter="active">Aktywne</button>
+        <button class="filter-btn" data-filter="completed">Wykonane</button>
+      </nav>
+
+      <ul class="todo-list" id="todoList"></ul>
+</main>
+
+<script>
+
+</script>
+  </body>
+</html>
