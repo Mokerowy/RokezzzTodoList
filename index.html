@@ -12,8 +12,18 @@
     <title>Lista zadań (TODO)</title>
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎶</text></svg>"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😶‍🌫️</text></svg>"
     />
+
+<!--       __
+          / _)
+ _/\/\/\_/ /
+_|         /
+_|  (  | ( |
+/__.-'|_|--| 
+
+-->
+
     <style>
       :root {
         /* Kolory */
@@ -59,6 +69,7 @@
       }
 
       body {
+        overflow: hidden;
         min-height: 100dvh;
         background: #5a7edc
           url("https://ia601007.us.archive.org/13/items/theoriginalfilesofsomewindowswallpapers/bliss%20600dpi.jpg")
@@ -71,6 +82,7 @@
 
       /* --- Layout okna --- */
       .todo-card {
+        position: absolute;
         background: var(--xp-beige);
         width: 100%;
         max-width: 440px;
@@ -94,14 +106,7 @@
         display: flex;
         align-items: center;
         flex-shrink: 0;
-      }
-
-      .window-content {
-        padding: 12px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
+        cursor: grab;
       }
 
       /* --- Kontrolki --- */
@@ -248,7 +253,19 @@
         }
       }
     </style>
+
+
+<!--
+     )  (
+   (   ) )
+    \__[_/
+    |    |
+    `----' 
+  -->
+
+
   </head>
+  <!-- szkielet strony -->
   <body>
     <main class="todo-card">
       <h1>Moje Zadania</h1>
@@ -273,19 +290,29 @@
       <ul class="todo-list" id="todoList"></ul>
     </main>
 
+    <!-- 
+     .----. 
+    |>_   |       |\__/,|   (`\
+    |     |     _.|o o  |_   ) )
+     `----'    -(((---(((--------
+     /   \
+    '-----' 
+    -->
     <script>
       const state = {
         todos: JSON.parse(localStorage.getItem("todos-pro")) || [],
         filter: "all",
       };
-      // dodalem schludniejsze zarządzanie elementami i akcjami
+      // pobieranie elementów DOM
       const elements = {
         form: document.getElementById("todoForm"),
         input: document.getElementById("todoInput"),
         list: document.getElementById("todoList"),
         filterGroup: document.getElementById("filterGroup"),
+        card: document.querySelector(".todo-card"),
+        header: document.querySelector("h1"),
       };
-
+      // elementy DOM do zarządzania i akcje związane z TODO listą
       const actions = {
         save() {
           localStorage.setItem("todos-pro", JSON.stringify(state.todos));
@@ -319,16 +346,16 @@
           elements.list.innerHTML = filtered
             .map(
               (todo) => `
-                <li class="todo-item ${todo.completed ? "completed" : ""}">
-                    <input type="checkbox" ${todo.completed ? "checked" : ""} onchange="actions.toggle('${todo.id}')">
-                    <span class="todo-text" onclick="actions.toggle('${todo.id}')">${this.escapeHTML(todo.text)}</span>
-                    <button class="btn btn-del" onclick="actions.delete('${todo.id}')">Usuń</button>
-                </li>
-            `,
+          <li class="todo-item ${todo.completed ? "completed" : ""}">
+              <input type="checkbox" ${todo.completed ? "checked" : ""} onchange="actions.toggle('${todo.id}')">
+              <span class="todo-text" onclick="actions.toggle('${todo.id}')">${this.escapeHTML(todo.text)}</span>
+              <button class="btn btn-del" onclick="actions.delete('${todo.id}')">Usuń</button>
+          </li>
+      `,
             )
             .join("");
         },
-        // dodałem zabezpieczenia przed XSS
+        // Dodałem zabezpieczenie przed XSS poprzez escapowanie tekstu zadania.
         escapeHTML(str) {
           const p = document.createElement("p");
           p.textContent = str;
@@ -336,6 +363,7 @@
         },
       };
 
+      // Nasłuchiwacze zdarzeń (TODO)
       elements.form.addEventListener("submit", (e) => {
         e.preventDefault();
         const val = elements.input.value.trim();
@@ -356,7 +384,31 @@
         }
       });
 
+      // Przeciąganie okna (Drag & Drop)
+      let isDragging = false,
+        startX,
+        startY;
+
+      elements.header.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX - elements.card.offsetLeft;
+        startY = e.clientY - elements.card.offsetTop;
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        elements.card.style.left = `${e.clientX - startX}px`;
+        elements.card.style.top = `${e.clientY - startY}px`;
+        elements.card.style.margin = "0";
+      });
+
+      document.addEventListener("mouseup", () => {
+        isDragging = false;
+      });
+
       actions.render();
     </script>
   </body>
 </html>
+
+
