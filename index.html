@@ -3,211 +3,253 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Todo list app built with HTML, CSS, and JavaScript."
+    />
+    <meta name="keywords" content="Todo list, task manager, web application" />
+    <meta name="author" content="Szymon Kolodziejczyk" />
     <title>Lista zadań (TODO)</title>
-
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎶</text></svg>"
+    />
     <style>
-:root {
-  /* Kolory */
-  --xp-blue: #0054E3;
-  --xp-blue-dark: #003C74;
-  --xp-beige: #ECE9D8;
-  --xp-input-bg: #D6D2C2;
-  --xp-border-gray: #7F9DB9;
-  --xp-selection: #316AC5;
-  
-  /* Gradienty */
-  --bg-header: linear-gradient(to bottom, #0058ee 0%, #3593ff 4%, #288eff 6%, #127dff 40%, #036ffc 50%, #0262ee 51%, #0057e7 100%);
-  --bg-btn: linear-gradient(to bottom, #fff 0%, #ebebeb 10%, #d4d0c8 100%);
-  --bg-btn-hover: linear-gradient(to bottom, #fff4cc 0%, #ffeb99 10%, #ffdb59 100%);
-}
+      :root {
+        /* Kolory */
+        --xp-blue: #0054e3;
+        --xp-blue-dark: #003c74;
+        --xp-beige: #ece9d8;
+        --xp-input-bg: #d6d2c2;
+        --xp-border-gray: #7f9db9;
+        --xp-selection: #316ac5;
 
-/* --- Reset --- */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+        /* Gradienty */
+        --bg-header: linear-gradient(
+          to bottom,
+          #0058ee 0%,
+          #3593ff 4%,
+          #288eff 6%,
+          #127dff 40%,
+          #036ffc 50%,
+          #0262ee 51%,
+          #0057e7 100%
+        );
+        --bg-btn: linear-gradient(
+          to bottom,
+          #fff 0%,
+          #ebebeb 10%,
+          #d4d0c8 100%
+        );
+        --bg-btn-hover: linear-gradient(
+          to bottom,
+          #fff4cc 0%,
+          #ffeb99 10%,
+          #ffdb59 100%
+        );
+      }
 
-body {
-  min-height: 100dvh;
-  background: #5A7EDC url('https://ia601007.us.archive.org/13/items/theoriginalfilesofsomewindowswallpapers/bliss%20600dpi.jpg') no-repeat center/cover;
-  font-family: "Tahoma", sans-serif;
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-}
+      /* --- Reset --- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-/* --- Layout okna --- */
-.todo-card {
-  background: var(--xp-beige);
-  width: 100%;
-  max-width: 440px;
-  height: min(80vh, 500px);
-  border: 3px solid var(--xp-blue);
-  border-radius: 8px 8px 0 0;
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
-  padding: 2px;
-  display: flex;
-  flex-direction: column;
-}
+      body {
+        min-height: 100dvh;
+        background: #5a7edc
+          url("https://ia601007.us.archive.org/13/items/theoriginalfilesofsomewindowswallpapers/bliss%20600dpi.jpg")
+          no-repeat center/cover;
+        font-family: "Tahoma", sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 1rem;
+      }
 
-h1 {
-  background: var(--bg-header);
-  padding: 5px 10px;
-  color: white;
-  font-size: 13px;
-  text-shadow: 1px 1px 1px #000;
-  border-radius: 5px 5px 0 0;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
+      /* --- Layout okna --- */
+      .todo-card {
+        background: var(--xp-beige);
+        width: 100%;
+        max-width: 440px;
+        height: min(80vh, 500px);
+        border: 3px solid var(--xp-blue);
+        border-radius: 8px 8px 0 0;
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
+        padding: 2px;
+        display: flex;
+        flex-direction: column;
+      }
 
-.window-content {
-  padding: 12px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+      h1 {
+        background: var(--bg-header);
+        padding: 5px 10px;
+        color: white;
+        font-size: 13px;
+        text-shadow: 1px 1px 1px #000;
+        border-radius: 5px 5px 0 0;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
 
-/* --- Kontrolki --- */
-.input-group {
-  background: var(--xp-input-bg);
-  padding: 10px;
-  border: 1px solid #aca899;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px #808080;
-  display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
-}
+      .window-content {
+        padding: 12px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
 
-input[type="text"] {
-  flex: 1;
-  padding: 4px 6px;
-  border: 2px solid var(--xp-border-gray);
-  font: inherit;
-  font-size: 13px;
-}
+      /* --- Kontrolki --- */
+      .input-group {
+        background: var(--xp-input-bg);
+        padding: 10px;
+        border: 1px solid #aca899;
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px #808080;
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
 
-input[type="text"]:focus,
-.btn:focus-visible,
-.filter-btn:focus-visible {
-  outline: 2px solid #ffaa44;
-  outline-offset: -1px;
-}
+      input[type="text"] {
+        flex: 1;
+        padding: 4px 6px;
+        border: 2px solid var(--xp-border-gray);
+        font: inherit;
+        font-size: 13px;
+      }
 
-.btn, .filter-btn {
-  background: var(--bg-btn);
-  border: 1px solid var(--xp-blue-dark);
-  border-radius: 3px;
-  padding: 4px 14px;
-  font: inherit;
-  font-size: 13px;
-  cursor: pointer;
-  box-shadow: inset 0 -1px 1px #808080;
-  white-space: nowrap;
-}
+      input[type="text"]:focus,
+      .btn:focus-visible,
+      .filter-btn:focus-visible {
+        outline: 2px solid #ffaa44;
+        outline-offset: -1px;
+      }
 
-.btn:hover, .filter-btn:hover {
-  background: var(--bg-btn-hover);
-  border-color: #ffaa44;
-}
+      .btn,
+      .filter-btn {
+        background: var(--bg-btn);
+        border: 1px solid var(--xp-blue-dark);
+        border-radius: 3px;
+        padding: 4px 14px;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        box-shadow: inset 0 -1px 1px #808080;
+        white-space: nowrap;
+      }
 
-.btn:active, .filter-btn.active {
-  background: #d4d0c8;
-  box-shadow: inset 2px 2px 2px #808080;
-}
+      .btn:hover,
+      .filter-btn:hover {
+        background: var(--bg-btn-hover);
+        border-color: #ffaa44;
+      }
 
-.filters {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 10px;
-}
+      .btn:active,
+      .filter-btn.active {
+        background: #d4d0c8;
+        box-shadow: inset 2px 2px 2px #808080;
+      }
 
-/* --- Lista zadań --- */
-.todo-list {
-  background: white;
-  border: 2px solid var(--xp-border-gray);
-  list-style: none;
-  flex-grow: 1;
-  overflow-y: auto;
-}
+      .filters {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 10px;
+      }
 
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  font-size: 13px;
-  border-bottom: 1px solid #f0f0f0;
-  cursor: pointer;
-}
+      /* --- Lista zadań --- */
+      .todo-list {
+        background: white;
+        border: 2px solid var(--xp-border-gray);
+        list-style: none;
+        flex-grow: 1;
+        overflow-y: auto;
+      }
 
-.todo-item:hover {
-opacity: 0.8;
-}
+      .todo-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        font-size: 13px;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+      }
 
-.todo-text {
-  flex: 1;
-  word-break: break-word;
-}
+      .todo-item:hover {
+        opacity: 0.8;
+      }
 
-.todo-item.completed .todo-text {
-  color: #808080;
-  text-decoration: line-through;
-}
+      .todo-text {
+        flex: 1;
+        word-break: break-word;
+      }
 
-.btn-del {
-  background: transparent;
-  border: none;
-  color: inherit;
-  font: inherit;
-  font-weight: bold;
-  font-size: 11px;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.1s;
-  text-decoration: underline;
-}
+      .todo-item.completed .todo-text {
+        color: #808080;
+        text-decoration: line-through;
+      }
 
-.todo-item:hover .btn-del,
-.btn-del:focus-visible {
-  opacity: 1;
-  color: #ff0000;
-}
+      .btn-del {
+        background: transparent;
+        border: none;
+        color: inherit;
+        font: inherit;
+        font-weight: bold;
+        font-size: 11px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.1s;
+        text-decoration: underline;
+      }
 
-.todo-item:hover .btn-del:hover {
-  color: #ffb3b3;
-}
+      .todo-item:hover .btn-del,
+      .btn-del:focus-visible {
+        opacity: 1;
+        color: #ff0000;
+      }
 
-/* --- Scrollbar WebKit --- */
-.todo-list::-webkit-scrollbar {
-  width: 16px;
-}
+      .todo-item:hover .btn-del:hover {
+        color: #ffb3b3;
+      }
 
-.todo-list::-webkit-scrollbar-track {
-  background: #E9E7DB;
-}
+      /* --- Scrollbar WindowsXP--- */
+      .todo-list::-webkit-scrollbar {
+        width: 16px;
+      }
 
-.todo-list::-webkit-scrollbar-thumb {
-  background: var(--bg-btn);
-  border: 1px solid var(--xp-blue-dark);
-  box-shadow: inset 1px 1px 0 #fff;
-}
+      .todo-list::-webkit-scrollbar-track {
+        background: #e9e7db;
+      }
 
-/* --- Responsywność --- */
-@media (max-width: 480px) {
-  .todo-card { height: 95dvh; }
-  .input-group { flex-wrap: wrap; }
-  .btn-del { opacity: 1; color: #ff0000; }
-}
-</style>
-</style>
+      .todo-list::-webkit-scrollbar-thumb {
+        background: var(--bg-btn);
+        border: 1px solid var(--xp-blue-dark);
+        box-shadow: inset 1px 1px 0 #fff;
+      }
+
+      /* --- Responsywność --- */
+      @media (max-width: 480px) {
+        .todo-card {
+          height: 95dvh;
+        }
+        .input-group {
+          flex-wrap: wrap;
+        }
+        .btn-del {
+          opacity: 1;
+          color: #ff0000;
+        }
+      }
+    </style>
   </head>
   <body>
-
     <main class="todo-card">
       <h1>Moje Zadania</h1>
 
@@ -215,7 +257,7 @@ opacity: 0.8;
         <input
           type="text"
           id="todoInput"
-          placeholder="Co jest do zrobienia?"
+          placeholder="Dodaj nowe zadanie"
           required
           aria-label="Nowe zadanie"
         />
@@ -229,10 +271,92 @@ opacity: 0.8;
       </nav>
 
       <ul class="todo-list" id="todoList"></ul>
-</main>
+    </main>
 
-<script>
+    <script>
+      const state = {
+        todos: JSON.parse(localStorage.getItem("todos-pro")) || [],
+        filter: "all",
+      };
+      // dodalem schludniejsze zarządzanie elementami i akcjami
+      const elements = {
+        form: document.getElementById("todoForm"),
+        input: document.getElementById("todoInput"),
+        list: document.getElementById("todoList"),
+        filterGroup: document.getElementById("filterGroup"),
+      };
 
-</script>
+      const actions = {
+        save() {
+          localStorage.setItem("todos-pro", JSON.stringify(state.todos));
+          this.render();
+        },
+
+        add(text) {
+          state.todos.push({ id: crypto.randomUUID(), text, completed: false });
+          this.save();
+        },
+
+        toggle(id) {
+          state.todos = state.todos.map((t) =>
+            t.id === id ? { ...t, completed: !t.completed } : t,
+          );
+          this.save();
+        },
+
+        delete(id) {
+          state.todos = state.todos.filter((t) => t.id !== id);
+          this.save();
+        },
+
+        render() {
+          const filtered = state.todos.filter((t) => {
+            if (state.filter === "active") return !t.completed;
+            if (state.filter === "completed") return t.completed;
+            return true;
+          });
+
+          elements.list.innerHTML = filtered
+            .map(
+              (todo) => `
+                <li class="todo-item ${todo.completed ? "completed" : ""}">
+                    <input type="checkbox" ${todo.completed ? "checked" : ""} onchange="actions.toggle('${todo.id}')">
+                    <span class="todo-text" onclick="actions.toggle('${todo.id}')">${this.escapeHTML(todo.text)}</span>
+                    <button class="btn btn-del" onclick="actions.delete('${todo.id}')">Usuń</button>
+                </li>
+            `,
+            )
+            .join("");
+        },
+        // dodałem zabezpieczenia przed XSS
+        escapeHTML(str) {
+          const p = document.createElement("p");
+          p.textContent = str;
+          return p.innerHTML;
+        },
+      };
+
+      elements.form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const val = elements.input.value.trim();
+        if (val) {
+          actions.add(val);
+          elements.input.value = "";
+        }
+      });
+
+      elements.filterGroup.addEventListener("click", (e) => {
+        if (e.target.classList.contains("filter-btn")) {
+          state.filter = e.target.dataset.filter;
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          e.target.classList.add("active");
+          actions.render();
+        }
+      });
+
+      actions.render();
+    </script>
   </body>
 </html>
